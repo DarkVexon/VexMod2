@@ -1,8 +1,8 @@
 package vexsQol.patches;
 
-import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
-import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
+import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
@@ -11,8 +11,12 @@ import com.megacrit.cardcrawl.powers.BurstPower;
 import com.megacrit.cardcrawl.relics.CursedKey;
 import com.megacrit.cardcrawl.relics.DreamCatcher;
 import com.megacrit.cardcrawl.relics.GamblingChip;
+import com.megacrit.cardcrawl.relics.PotionBelt;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
 import com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect;
+import javassist.CtBehavior;
+
+import java.util.ArrayList;
 
 import static vexsQol.VexsQOLMod.makeID;
 
@@ -83,7 +87,7 @@ public class RelicChanges {
     public static class DreamCatcherDescription {
         private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("DreamCatcherDesc");
 
-        public static SpireReturn Prefix(GamblingChip __instance) {
+        public static SpireReturn Prefix(DreamCatcher __instance) {
             return SpireReturn.Return(uiStrings.TEXT[0]);
         }
     }
@@ -93,6 +97,45 @@ public class RelicChanges {
             method = "update"
     )
     public static class BetterDreams {
+        @SpireInsertPatch(
+                locator = Locator.class,
+                localvars = {"rewardCards"}
+        )
+        public static void upgradeCards(CampfireSleepEffect __instance, ArrayList<AbstractCard> rewardCards) {
+            for (AbstractCard c : rewardCards) {
+                if (!c.upgraded) {
+                    c.upgrade();
+                }
+            }
+        }
 
+        private static class Locator extends SpireInsertLocator {
+            public int[] Locate(CtBehavior ctMethodToPatch) throws Exception {
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(ArrayList.class, "isEmpty");
+                return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
+            }
+        }
+    }
+
+    @SpirePatch(
+            clz = PotionBelt.class,
+            method = "getUpdatedDescription"
+    )
+    public static class PotionBeltDescription {
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("PotionBeltDesc");
+
+        public static SpireReturn Prefix(PotionBelt __instance) {
+            return SpireReturn.Return(uiStrings.TEXT[0]);
+        }
+    }
+
+    @SpirePatch(
+            clz = PotionBelt.class,
+            method = "onEquip"
+    )
+    public static class PotionBeltComplementaryPotion {
+        public static void Postfix(PotionBelt __instance) {
+            AbstractDungeon.player.obtainPotion(AbstractDungeon.returnRandomPotion());
+        }
     }
 }

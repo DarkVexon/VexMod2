@@ -13,5 +13,10 @@
     "TEXT": [
       "Whenever you #yRest, you may add an #yUpgraded card into your deck."
     ]
+  },
+  "${ModID}:PotionBeltDesc": {
+    "TEXT": [
+      "Upon pickup, gain #b2 Potion slots and a random Potion."
+    ]
   }
 }
