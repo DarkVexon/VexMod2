@@ -1,7 +1,6 @@
 package vexsQol.relics;
 
 import basemod.abstracts.CustomRelic;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.relics.AbstractRelic;

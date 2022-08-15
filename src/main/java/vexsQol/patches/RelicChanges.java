@@ -3,6 +3,7 @@ package vexsQol.patches;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.actions.common.DrawCardAction;
+import com.megacrit.cardcrawl.actions.common.RelicAboveCreatureAction;
 import com.megacrit.cardcrawl.actions.utility.UseCardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
@@ -14,6 +15,7 @@ import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.map.MapGenerator;
 import com.megacrit.cardcrawl.powers.BurstPower;
 import com.megacrit.cardcrawl.powers.SharpHidePower;
+import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.ThornsPower;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
@@ -61,7 +63,7 @@ public class RelicChanges {
             method = "getUpdatedDescription"
     )
     public static class ChipDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("GamblingChipDesc");
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("GamblingChipDesc"));
 
         public static SpireReturn Prefix(GamblingChip __instance) {
             return SpireReturn.Return(uiStrings.TEXT[0]);
@@ -80,7 +82,7 @@ public class RelicChanges {
 
     @SpirePatch(
             clz = GamblingChip.class,
-            method = "atBattleStart"
+            method = "atBattleStartPreDraw"
     )
     public static class ChipNewEffect {
         public static void Prefix(GamblingChip __instance) {
@@ -94,7 +96,7 @@ public class RelicChanges {
             method = "getUpdatedDescription"
     )
     public static class DreamCatcherDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("DreamCatcherDesc");
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("DreamCatcherDesc"));
 
         public static SpireReturn Prefix(DreamCatcher __instance) {
             return SpireReturn.Return(uiStrings.TEXT[0]);
@@ -131,7 +133,7 @@ public class RelicChanges {
             method = "getUpdatedDescription"
     )
     public static class PotionBeltDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("PotionBeltDesc");
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("PotionBeltDesc"));
 
         public static SpireReturn Prefix(PotionBelt __instance) {
             return SpireReturn.Return(uiStrings.TEXT[0]);
@@ -153,7 +155,7 @@ public class RelicChanges {
             method = "getUpdatedDescription"
     )
     public static class BootDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("BootDesc");
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("BootDesc"));
 
         public static SpireReturn Prefix(Boot __instance) {
             return SpireReturn.Return(uiStrings.TEXT[0]);
@@ -179,8 +181,8 @@ public class RelicChanges {
             method = "onUseCard"
     )
     public static class BootNoSharpHide {
-        public static SpireReturn Prefix(ThornsPower __instance, DamageInfo info, int damageAmount) {
-            if (__instance.owner != AbstractDungeon.player && AbstractDungeon.player.hasRelic(Boot.ID)) {
+        public static SpireReturn Prefix(SharpHidePower __instance, AbstractCard c, UseCardAction action) {
+            if (__instance.owner != AbstractDungeon.player && AbstractDungeon.player.hasRelic(Boot.ID) && c.type == AbstractCard.CardType.ATTACK) {
                 AbstractDungeon.player.getRelic(Boot.ID).flash();
                 return SpireReturn.Return();
             }
@@ -193,7 +195,7 @@ public class RelicChanges {
             method = "getUpdatedDescription"
     )
     public static class BlueCandleDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("BlueCandleDesc");
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("BlueCandleDesc"));
 
         public static SpireReturn Prefix(BlueCandle __instance) {
             return SpireReturn.Return(uiStrings.TEXT[0]);
@@ -217,7 +219,7 @@ public class RelicChanges {
             method = "getUpdatedDescription"
     )
     public static class TinyHouseDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("TinyHouseDesc");
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("TinyHouseDesc"));
 
         public static SpireReturn Prefix(TinyHouse __instance) {
             return SpireReturn.Return(uiStrings.TEXT[0]);
@@ -250,10 +252,36 @@ public class RelicChanges {
 
     @SpirePatch(clz = MapGenerator.class, method = "generateDungeon")
     public static class CursedCompassPatch {
-        public static void Prefix(int height, int width, @ByRef int[] pathDensity, Random rng) {
+        public static void Prefix(int height, int width, @ByRef int[] pathDensity, com.megacrit.cardcrawl.random.Random rng) {
             if (AbstractDungeon.player.hasRelic(CursedCompass.ID))
                 pathDensity[0] = 1;
         }
     }
 
+    @SpirePatch(
+            clz = NilrysCodex.class,
+            method = "getUpdatedDescription"
+    )
+    public static class NilrysCodexDescription {
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("NilrysDesc"));
+
+        public static SpireReturn Prefix(NilrysCodex __instance) {
+            return SpireReturn.Return(uiStrings.TEXT[0]);
+        }
+    }
+
+    @SpirePatch(
+            clz = NilrysCodex.class,
+            method = "onPlayerEndTurn"
+    )
+    public static class NewNilrysEffect {
+        public static SpireReturn Prefix(NilrysCodex __instance) {
+            if (AbstractDungeon.actionManager.cardsPlayedThisTurn.stream().anyMatch(q -> q.rarity.equals(AbstractCard.CardRarity.RARE))) {
+                __instance.flash();
+                AbstractDungeon.actionManager.addToBottom(new RelicAboveCreatureAction(AbstractDungeon.player, __instance));
+                AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, 1), 1));
+            }
+            return SpireReturn.Return();
+        }
+    }
 }
