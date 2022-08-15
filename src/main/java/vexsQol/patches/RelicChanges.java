@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.map.MapGenerator;
 import com.megacrit.cardcrawl.powers.BurstPower;
 import com.megacrit.cardcrawl.powers.SharpHidePower;
 import com.megacrit.cardcrawl.powers.ThornsPower;
@@ -20,6 +21,7 @@ import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
 import javassist.CtBehavior;
+import vexsQol.relics.CursedCompass;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -244,4 +246,14 @@ public class RelicChanges {
             }
         }
     }
+
+
+    @SpirePatch(clz = MapGenerator.class, method = "generateDungeon")
+    public static class CursedCompassPatch {
+        public static void Prefix(int height, int width, @ByRef int[] pathDensity, Random rng) {
+            if (AbstractDungeon.player.hasRelic(CursedCompass.ID))
+                pathDensity[0] = 1;
+        }
+    }
+
 }

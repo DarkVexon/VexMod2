@@ -1,0 +1,9 @@
+{
+  "${ModID}:CursedCompass": {
+    "NAME": "Cursed Compass",
+    "FLAVOR": "No matter which way you turn, it always points forwards.",
+    "DESCRIPTIONS": [
+      "Gain [E] at the start of your turn. Future maps contain only #b1 path."
+    ]
+  }
+}

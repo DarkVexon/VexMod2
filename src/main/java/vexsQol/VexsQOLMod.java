@@ -1,15 +1,17 @@
 package vexsQol;
 
 import basemod.BaseMod;
+import basemod.helpers.RelicType;
+import basemod.interfaces.EditRelicsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.localization.PowerStrings;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import vexsQol.relics.CursedCompass;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 @SpireInitializer
-public class VexsQOLMod implements EditStringsSubscriber {
+public class VexsQOLMod implements EditStringsSubscriber, EditRelicsSubscriber {
 
     public static final String modID = "vexsqol";
 
@@ -18,7 +20,7 @@ public class VexsQOLMod implements EditStringsSubscriber {
     }
 
     public VexsQOLMod() {
-        //BaseMod.subscribe(this);
+        BaseMod.subscribe(this);
     }
 
     public static String makePath(String resourcePath) {
@@ -31,14 +33,6 @@ public class VexsQOLMod implements EditStringsSubscriber {
 
     public static String makeRelicPath(String resourcePath) {
         return modID + "Resources/images/relics/" + resourcePath;
-    }
-
-    public static String makePowerPath(String resourcePath) {
-        return modID + "Resources/images/powers/" + resourcePath;
-    }
-
-    public static String makeCardPath(String resourcePath) {
-        return modID + "Resources/images/cards/" + resourcePath;
     }
 
     public static void initialize() {
@@ -61,5 +55,10 @@ public class VexsQOLMod implements EditStringsSubscriber {
     @Override
     public void receiveEditStrings() {
         BaseMod.loadCustomStringsFile(UIStrings.class, modID + "Resources/localization/" + getLangString() + "/UIStrings.json");
+    }
+
+    @Override
+    public void receiveEditRelics() {
+        BaseMod.addRelic(new CursedCompass(), RelicType.SHARED);
     }
 }
