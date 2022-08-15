@@ -23,5 +23,15 @@
     "TEXT": [
       "Whenever you would deal #b4 or less unblocked attack damage, increase it to #b5. NL You do not receive damage from #yThorns or #ySharp #yHide."
     ]
+  },
+  "${ModID}:BlueCandleDesc": {
+    "TEXT": [
+      "#yUnplayable #rCurse cards can now be played. NL Whenever you play a #rCurse, lose #b1 HP, #yExhaust it, and draw #b1 card."
+    ]
+  },
+  "${ModID}:TinyHouseDesc": {
+    "TEXT": [
+      "Upon pickup, obtain #b1 potion. NL Gain #b50 #yGold. NL Raise your Max HP by #b5. NL Obtain #b1 card. NL Upgrade #b2 random cards."
+    ]
   }
 }
