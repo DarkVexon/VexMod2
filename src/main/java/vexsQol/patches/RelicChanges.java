@@ -19,6 +19,7 @@ import com.megacrit.cardcrawl.powers.StrengthPower;
 import com.megacrit.cardcrawl.powers.ThornsPower;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
+import com.megacrit.cardcrawl.rewards.chests.BossChest;
 import com.megacrit.cardcrawl.vfx.UpgradeShineEffect;
 import com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect;
 import com.megacrit.cardcrawl.vfx.cardManip.ShowCardBrieflyEffect;
@@ -51,7 +52,7 @@ public class RelicChanges {
     )
     public static class YouCantOpenIt {
         public static SpireReturn Prefix(AbstractChest __instance) {
-            if (AbstractDungeon.player.hasRelic(CursedKey.ID)) {
+            if (!(__instance instanceof BossChest) && AbstractDungeon.player.hasRelic(CursedKey.ID)) {
                 return SpireReturn.Return();
             }
             return SpireReturn.Continue();
