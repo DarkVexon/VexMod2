@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>UnimportantInfo</groupId>
 
-    <artifactId>TheTodo</artifactId>
-    <version>0.0.1</version>
-    <name>The Todo</name>
-    <description>TODO: Change this description</description>
+    <artifactId>VexsQOL</artifactId>
+    <version>1.0</version>
+    <name>VexsQOL</name>
+    <description>Changes some things in Slay the Spire.</description>
     <!-- Change the above for mod information. -->
 
     <properties>
@@ -15,9 +15,9 @@
         <SlayTheSpire.version>12-22-2020</SlayTheSpire.version>
         <ModTheSpire.version>3.18.2</ModTheSpire.version>
 
-        <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN TodoMod CLASS FILE -->
-        <ModID>todomod</ModID>
-        <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN TodoMod CLASS FILE -->
+        <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
+        <ModID>vexsqol</ModID>
+        <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
 
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION-->
         <Steam.path>C:/Program Files (x86)/Steam/steamapps/</Steam.path>

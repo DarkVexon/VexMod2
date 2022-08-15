@@ -1,4 +1,4 @@
-package theTodo.util;
+package vexsQol.util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
