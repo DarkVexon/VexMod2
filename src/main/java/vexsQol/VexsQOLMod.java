@@ -1,10 +1,15 @@
 package vexsQol;
 
+import basemod.BaseMod;
+import basemod.interfaces.EditStringsSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
+import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.localization.PowerStrings;
+import com.megacrit.cardcrawl.localization.UIStrings;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 @SpireInitializer
-public class VexsQOLMod {
+public class VexsQOLMod implements EditStringsSubscriber {
 
     public static final String modID = "vexsqol";
 
@@ -38,5 +43,23 @@ public class VexsQOLMod {
 
     public static void initialize() {
         VexsQOLMod thismod = new VexsQOLMod();
+    }
+
+    public static Settings.GameLanguage[] SupportedLanguages = {
+            Settings.GameLanguage.ENG,
+    };
+
+    private String getLangString() {
+        for (Settings.GameLanguage lang : SupportedLanguages) {
+            if (lang.equals(Settings.language)) {
+                return Settings.language.name().toLowerCase();
+            }
+        }
+        return "eng";
+    }
+
+    @Override
+    public void receiveEditStrings() {
+        BaseMod.loadCustomStringsFile(UIStrings.class, modID + "Resources/localization/" + getLangString() + "/UIStrings.json");
     }
 }

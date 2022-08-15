@@ -1,0 +1,17 @@
+{
+  "${ModID}:CursedKeyDesc": {
+    "TEXT": [
+      "Gain [E] at the start of your turn. You can't open non-Boss chests."
+    ]
+  },
+  "${ModID}:GamblingChipDesc": {
+    "TEXT": [
+      "The first #ySkill you play on turn #b1 is played twice."
+    ]
+  },
+  "${ModID}:DreamCatcherDesc": {
+    "TEXT": [
+      "Whenever you #yRest, you may add an #yUpgraded card into your deck."
+    ]
+  }
+}
