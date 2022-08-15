@@ -3,15 +3,15 @@ package vexsQol.patches;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.powers.BurstPower;
-import com.megacrit.cardcrawl.relics.CursedKey;
-import com.megacrit.cardcrawl.relics.DreamCatcher;
-import com.megacrit.cardcrawl.relics.GamblingChip;
-import com.megacrit.cardcrawl.relics.PotionBelt;
+import com.megacrit.cardcrawl.powers.SharpHidePower;
+import com.megacrit.cardcrawl.powers.ThornsPower;
+import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
 import com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect;
 import javassist.CtBehavior;
@@ -136,6 +136,46 @@ public class RelicChanges {
     public static class PotionBeltComplementaryPotion {
         public static void Postfix(PotionBelt __instance) {
             AbstractDungeon.player.obtainPotion(AbstractDungeon.returnRandomPotion());
+        }
+    }
+
+    @SpirePatch(
+            clz = Boot.class,
+            method = "getUpdatedDescription"
+    )
+    public static class BootDescription {
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString("BootDesc");
+
+        public static SpireReturn Prefix(Boot __instance) {
+            return SpireReturn.Return(uiStrings.TEXT[0]);
+        }
+    }
+
+    @SpirePatch(
+            clz = ThornsPower.class,
+            method = "onAttacked"
+    )
+    public static class BootNoThorns {
+        public static SpireReturn Prefix(ThornsPower __instance, DamageInfo info, int damageAmount) {
+            if (__instance.owner != AbstractDungeon.player && AbstractDungeon.player.hasRelic(Boot.ID)) {
+                AbstractDungeon.player.getRelic(Boot.ID).flash();
+                return SpireReturn.Return();
+            }
+            return SpireReturn.Continue();
+        }
+    }
+
+    @SpirePatch(
+            clz = SharpHidePower.class,
+            method = "onUseCard"
+    )
+    public static class BootNoSharpHide {
+        public static SpireReturn Prefix(ThornsPower __instance, DamageInfo info, int damageAmount) {
+            if (__instance.owner != AbstractDungeon.player && AbstractDungeon.player.hasRelic(Boot.ID)) {
+                AbstractDungeon.player.getRelic(Boot.ID).flash();
+                return SpireReturn.Return();
+            }
+            return SpireReturn.Continue();
         }
     }
 }
