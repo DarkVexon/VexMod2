@@ -1,7 +1,7 @@
 {
   "${ModID}:CursedKeyDesc": {
     "TEXT": [
-      "Gain [E] at the start of your turn. You can't open non-Boss chests."
+      "Gain [E] at the start of your turn. You cannot open non-Boss chests."
     ]
   },
   "${ModID}:GamblingChipDesc": {
