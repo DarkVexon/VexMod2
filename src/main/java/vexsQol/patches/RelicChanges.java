@@ -13,10 +13,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.map.MapGenerator;
-import com.megacrit.cardcrawl.powers.BurstPower;
-import com.megacrit.cardcrawl.powers.SharpHidePower;
-import com.megacrit.cardcrawl.powers.StrengthPower;
-import com.megacrit.cardcrawl.powers.ThornsPower;
+import com.megacrit.cardcrawl.powers.*;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
 import com.megacrit.cardcrawl.rewards.chests.BossChest;
@@ -88,7 +85,7 @@ public class RelicChanges {
     public static class ChipNewEffect {
         public static void Prefix(GamblingChip __instance) {
             __instance.flash();
-            AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new BurstPower(AbstractDungeon.player, 1), 1));
+            AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new DuplicationPower(AbstractDungeon.player, 1), 1));
         }
     }
 

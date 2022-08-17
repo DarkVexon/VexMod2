@@ -6,7 +6,7 @@
   },
   "${ModID}:GamblingChipDesc": {
     "TEXT": [
-      "The first #ySkill you play on turn #b1 is played twice."
+      "The first card you play on turn #b1 is played twice."
     ]
   },
   "${ModID}:DreamCatcherDesc": {
