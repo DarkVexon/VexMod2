@@ -38,5 +38,10 @@
     "TEXT": [
       "At the end of your turn, if you played a Rare card, gain #b1 #yStrength."
     ]
+  },
+  "${ModID}:CauldronDesc": {
+    "TEXT": [
+      "Upon pickup, brews #b5 random potions and grants #b1 Potion slot."
+    ]
   }
 }

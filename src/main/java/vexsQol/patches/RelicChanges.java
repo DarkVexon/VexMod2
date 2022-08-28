@@ -13,7 +13,11 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.map.MapGenerator;
-import com.megacrit.cardcrawl.powers.*;
+import com.megacrit.cardcrawl.potions.PotionSlot;
+import com.megacrit.cardcrawl.powers.DuplicationPower;
+import com.megacrit.cardcrawl.powers.SharpHidePower;
+import com.megacrit.cardcrawl.powers.StrengthPower;
+import com.megacrit.cardcrawl.powers.ThornsPower;
 import com.megacrit.cardcrawl.relics.*;
 import com.megacrit.cardcrawl.rewards.chests.AbstractChest;
 import com.megacrit.cardcrawl.rewards.chests.BossChest;
@@ -165,10 +169,10 @@ public class RelicChanges {
             method = "onAttacked"
     )
     public static class BootNoThorns {
-        public static SpireReturn Prefix(ThornsPower __instance, DamageInfo info, int damageAmount) {
+        public static SpireReturn<Integer> Prefix(ThornsPower __instance, DamageInfo info, int damageAmount) {
             if (__instance.owner != AbstractDungeon.player && AbstractDungeon.player.hasRelic(Boot.ID)) {
                 AbstractDungeon.player.getRelic(Boot.ID).flash();
-                return SpireReturn.Return();
+                return SpireReturn.Return(damageAmount);
             }
             return SpireReturn.Continue();
         }
@@ -280,6 +284,29 @@ public class RelicChanges {
                 AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new StrengthPower(AbstractDungeon.player, 1), 1));
             }
             return SpireReturn.Return();
+        }
+    }
+
+    @SpirePatch(
+            clz = Cauldron.class,
+            method = "getUpdatedDescription"
+    )
+    public static class CauldronDescription {
+        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("CauldronDesc"));
+
+        public static SpireReturn Prefix(Cauldron __instance) {
+            return SpireReturn.Return(uiStrings.TEXT[0]);
+        }
+    }
+
+    @SpirePatch(
+            clz = Cauldron.class,
+            method = "onEquip"
+    )
+    public static class CauldronBonusPotionSlot {
+        public static void Prefix(Cauldron __instance) {
+            AbstractDungeon.player.potionSlots += 1;
+            AbstractDungeon.player.potions.add(new PotionSlot(AbstractDungeon.player.potionSlots - 1));
         }
     }
 }
