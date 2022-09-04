@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.PotionHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.map.MapGenerator;
 import com.megacrit.cardcrawl.potions.PotionSlot;
@@ -57,39 +58,6 @@ public class RelicChanges {
                 return SpireReturn.Return();
             }
             return SpireReturn.Continue();
-        }
-    }
-
-    @SpirePatch(
-            clz = GamblingChip.class,
-            method = "getUpdatedDescription"
-    )
-    public static class ChipDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("GamblingChipDesc"));
-
-        public static SpireReturn Prefix(GamblingChip __instance) {
-            return SpireReturn.Return(uiStrings.TEXT[0]);
-        }
-    }
-
-    @SpirePatch(
-            clz = GamblingChip.class,
-            method = "atTurnStartPostDraw"
-    )
-    public static class ChipStopDoingThat {
-        public static SpireReturn Prefix(GamblingChip __instance) {
-            return SpireReturn.Return();
-        }
-    }
-
-    @SpirePatch(
-            clz = GamblingChip.class,
-            method = "atBattleStartPreDraw"
-    )
-    public static class ChipNewEffect {
-        public static void Prefix(GamblingChip __instance) {
-            __instance.flash();
-            AbstractDungeon.actionManager.addToBottom(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, new DuplicationPower(AbstractDungeon.player, 1), 1));
         }
     }
 
@@ -233,21 +201,35 @@ public class RelicChanges {
             method = "onEquip"
     )
     public static class TinyHouseBuff {
-        public static void Postfix(TinyHouse __instance) {
-            ArrayList<AbstractCard> upgradableCards = new ArrayList();
+        public static SpireReturn Prefix(TinyHouse __instance) {
+            ArrayList<AbstractCard> upgradableCards = new ArrayList<>();
             for (AbstractCard c : AbstractDungeon.player.masterDeck.group) {
-                if (c.canUpgrade()) {
+                if (c.canUpgrade())
                     upgradableCards.add(c);
-                }
             }
-
             Collections.shuffle(upgradableCards, new Random(AbstractDungeon.miscRng.randomLong()));
-            if (!upgradableCards.isEmpty()) {
-                upgradableCards.get(0).upgrade();
-                AbstractDungeon.player.bottledCardUpgradeCheck((AbstractCard) upgradableCards.get(0));
-                AbstractDungeon.topLevelEffects.add(new ShowCardBrieflyEffect(((AbstractCard) upgradableCards.get(0)).makeStatEquivalentCopy(), (float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
-                AbstractDungeon.topLevelEffects.add(new UpgradeShineEffect((float) Settings.WIDTH / 2.0F, (float) Settings.HEIGHT / 2.0F));
-            }
+            if (!upgradableCards.isEmpty())
+                if (upgradableCards.size() == 1) {
+                    upgradableCards.get(0).upgrade();
+                    AbstractDungeon.player.bottledCardUpgradeCheck(upgradableCards.get(0));
+                    AbstractDungeon.topLevelEffects.add(new ShowCardBrieflyEffect(upgradableCards.get(0).makeStatEquivalentCopy()));
+                    AbstractDungeon.topLevelEffects.add(new UpgradeShineEffect(Settings.WIDTH / 2.0F, Settings.HEIGHT / 2.0F));
+                } else {
+                    upgradableCards.get(0).upgrade();
+                    AbstractDungeon.player.bottledCardUpgradeCheck(upgradableCards.get(0));
+                    AbstractDungeon.topLevelEffects.add(new ShowCardBrieflyEffect(upgradableCards.get(0).makeStatEquivalentCopy(), Settings.WIDTH / 3.0F, Settings.HEIGHT / 3.0F));
+                    AbstractDungeon.topLevelEffects.add(new UpgradeShineEffect(Settings.WIDTH / 3.0F, Settings.HEIGHT / 3.0F));
+                    AbstractDungeon.player.bottledCardUpgradeCheck(upgradableCards.get(1));
+                    AbstractDungeon.player.bottledCardUpgradeCheck(upgradableCards.get(1));
+                    AbstractDungeon.topLevelEffects.add(new ShowCardBrieflyEffect(upgradableCards.get(1).makeStatEquivalentCopy(), (Settings.WIDTH / 3.0F * 2f), (Settings.HEIGHT / 3.0F * 2f)));
+                    AbstractDungeon.topLevelEffects.add(new UpgradeShineEffect((Settings.WIDTH / 3.0F * 2f), (Settings.HEIGHT / 3.0F * 2f)));
+                }
+            AbstractDungeon.player.increaseMaxHp(5, true);
+            AbstractDungeon.getCurrRoom().addGoldToRewards(50);
+            AbstractDungeon.getCurrRoom().addPotionToRewards(PotionHelper.getRandomPotion(AbstractDungeon.miscRng));
+            AbstractDungeon.combatRewardScreen.open(__instance.DESCRIPTIONS[3]);
+            (AbstractDungeon.getCurrRoom()).rewardPopOutTimer = 0.0F;
+            return SpireReturn.Return(null);
         }
     }
 
