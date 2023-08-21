@@ -1,0 +1,7 @@
+{
+  "${ModID}:BootDesc": {
+    "TEXT": [
+      "Whenever you would deal #b4 or less unblocked attack damage, increase it to #b5. NL You do not receive damage from #yThorns or #ySharp #yHide."
+    ]
+  }
+}
