@@ -1,43 +1,28 @@
-package vexsQol;
+package betterBoot;
 
 import basemod.BaseMod;
-import basemod.helpers.RelicType;
-import basemod.interfaces.EditRelicsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.localization.RelicStrings;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import vexsQol.relics.CursedCompass;
+import betterBoot.relics.CursedCompass;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 @SpireInitializer
-public class VexsQOLMod implements EditStringsSubscriber, EditRelicsSubscriber {
+public class BetterBootMod implements EditStringsSubscriber {
 
-    public static final String modID = "vexsqol";
+    public static final String modID = "betterboot";
 
     public static String makeID(String idText) {
         return modID + ":" + idText;
     }
 
-    public VexsQOLMod() {
+    public BetterBootMod() {
         BaseMod.subscribe(this);
     }
 
-    public static String makePath(String resourcePath) {
-        return modID + "Resources/" + resourcePath;
-    }
-
-    public static String makeImagePath(String resourcePath) {
-        return modID + "Resources/images/" + resourcePath;
-    }
-
-    public static String makeRelicPath(String resourcePath) {
-        return modID + "Resources/images/relics/" + resourcePath;
-    }
-
     public static void initialize() {
-        VexsQOLMod thismod = new VexsQOLMod();
+        BetterBootMod thismod = new BetterBootMod();
     }
 
     public static Settings.GameLanguage[] SupportedLanguages = {
@@ -56,12 +41,5 @@ public class VexsQOLMod implements EditStringsSubscriber, EditRelicsSubscriber {
     @Override
     public void receiveEditStrings() {
         BaseMod.loadCustomStringsFile(UIStrings.class, modID + "Resources/localization/" + getLangString() + "/UIStrings.json");
-
-        BaseMod.loadCustomStringsFile(RelicStrings.class, modID + "Resources/localization/" + getLangString() + "/Relicstrings.json");
-    }
-
-    @Override
-    public void receiveEditRelics() {
-        BaseMod.addRelic(new CursedCompass(), RelicType.SHARED);
     }
 }
