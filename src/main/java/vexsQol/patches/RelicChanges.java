@@ -37,31 +37,6 @@ import static vexsQol.VexsQOLMod.makeID;
 public class RelicChanges {
 
     @SpirePatch(
-            clz = CursedKey.class,
-            method = "setDescription"
-    )
-    public static class KeyDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("CursedKeyDesc"));
-
-        public static SpireReturn Prefix(CursedKey __instance, AbstractPlayer.PlayerClass c) {
-            return SpireReturn.Return(uiStrings.TEXT[0]);
-        }
-    }
-
-    @SpirePatch(
-            clz = AbstractChest.class,
-            method = "update"
-    )
-    public static class YouCantOpenIt {
-        public static SpireReturn Prefix(AbstractChest __instance) {
-            if (!(__instance instanceof BossChest) && AbstractDungeon.player.hasRelic(CursedKey.ID)) {
-                return SpireReturn.Return();
-            }
-            return SpireReturn.Continue();
-        }
-    }
-
-    @SpirePatch(
             clz = DreamCatcher.class,
             method = "getUpdatedDescription"
     )

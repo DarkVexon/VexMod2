@@ -44,16 +44,6 @@ public class TexLoader {
         textures.put(textureString, texture);
     }
 
-    public static boolean testTexture(String filePath) {
-        return Gdx.files.internal(filePath).exists();
-    }
-
-    public static TextureAtlas.AtlasRegion getTextureAsAtlasRegion(String textureString) {
-        Texture texture = getTexture(textureString);
-        return ImageHelper.asAtlasRegion(texture);
-    }
-
-
     @SpirePatch(clz = Texture.class, method="dispose")
     public static class DisposeListener {
         @SpirePrefixPatch

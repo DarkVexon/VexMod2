@@ -4,11 +4,6 @@
       "Gain [E] at the start of your turn. You cannot open non-Boss chests."
     ]
   },
-  "${ModID}:GamblingChipDesc": {
-    "TEXT": [
-      "The first card you play on turn #b1 is played twice."
-    ]
-  },
   "${ModID}:DreamCatcherDesc": {
     "TEXT": [
       "Whenever you #yRest, you may add an #yUpgraded card into your deck."
