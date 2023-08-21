@@ -5,7 +5,6 @@ import basemod.interfaces.EditStringsSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.localization.UIStrings;
-import betterBoot.relics.CursedCompass;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 @SpireInitializer
