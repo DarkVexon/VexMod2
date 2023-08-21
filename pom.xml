@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>UnimportantInfo</groupId>
 
-    <artifactId>VexsQOL</artifactId>
+    <artifactId>coloredinkbottle</artifactId>
     <version>1.0</version>
-    <name>VexsQOL</name>
-    <description>Changes some things in Slay the Spire.</description>
+    <name>Colored Ink Bottle</name>
+    <description>Makes Ink Bottle change color each time it triggers.</description>
     <!-- Change the above for mod information. -->
 
     <properties>
@@ -16,7 +16,7 @@
         <ModTheSpire.version>3.18.2</ModTheSpire.version>
 
         <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
-        <ModID>vexsqol</ModID>
+        <ModID>coloredinkbottle</ModID>
         <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
 
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION-->
