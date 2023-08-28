@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>UnimportantInfo</groupId>
 
-    <artifactId>VexsQOL</artifactId>
+    <artifactId>speedySpire</artifactId>
     <version>1.0</version>
-    <name>VexsQOL</name>
-    <description>Changes some things in Slay the Spire.</description>
+    <name>Speedy Spire</name>
+    <description>Removes the mapping element of the game.</description>
     <!-- Change the above for mod information. -->
 
     <properties>
@@ -16,7 +16,7 @@
         <ModTheSpire.version>3.18.2</ModTheSpire.version>
 
         <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
-        <ModID>vexsqol</ModID>
+        <ModID>speedy</ModID>
         <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
 
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION-->
