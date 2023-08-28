@@ -136,30 +136,6 @@ public class RelicChanges {
     }
 
     @SpirePatch(
-            clz = BlueCandle.class,
-            method = "getUpdatedDescription"
-    )
-    public static class BlueCandleDescription {
-        private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("BlueCandleDesc"));
-
-        public static SpireReturn Prefix(BlueCandle __instance) {
-            return SpireReturn.Return(uiStrings.TEXT[0]);
-        }
-    }
-
-    @SpirePatch(
-            clz = BlueCandle.class,
-            method = "onUseCard"
-    )
-    public static class BlueCandleBuff {
-        public static void Postfix(BlueCandle __instance, AbstractCard card, UseCardAction action) {
-            if (card.type == AbstractCard.CardType.CURSE) {
-                AbstractDungeon.actionManager.addToBottom(new DrawCardAction(1));
-            }
-        }
-    }
-
-    @SpirePatch(
             clz = TinyHouse.class,
             method = "getUpdatedDescription"
     )
