@@ -80,7 +80,7 @@ public class Mapless {
                     AbstractDungeon.firstRoomChosen = true;
                 }
                 if (!AbstractDungeon.isDungeonBeaten) {
-                    AbstractDungeon.nextRoomTransitionStart();
+                    CardCrawlGame.dungeon.nextRoomTransition();
                     CardCrawlGame.music.fadeOutTempBGM();
                 }
             } else if (AbstractDungeon.getCurrMapNode().y == 14 || (AbstractDungeon.id.equals("TheEnding") && AbstractDungeon.getCurrMapNode().y == 2)) {
