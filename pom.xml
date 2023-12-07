@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>UnimportantInfo</groupId>
 
-    <artifactId>betterBoot</artifactId>
+    <artifactId>ingameclock</artifactId>
     <version>1.0</version>
-    <name>Better Boot</name>
-    <description>Makes The Boot protect you from Thorns and Sharp Hide.</description>
+    <name>In-Game Clock</name>
+    <description>Lets you check the time in-game.</description>
     <!-- Change the above for mod information. -->
 
     <properties>
@@ -16,7 +16,7 @@
         <ModTheSpire.version>3.18.2</ModTheSpire.version>
 
         <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
-        <ModID>betterboot</ModID>
+        <ModID>ingameclock</ModID>
         <!-- CHANGE THIS TO MATCH YOUR MODID FIELD IN THE MAIN VexsQOLMod CLASS FILE -->
 
         <!--CHANGE THIS TO YOUR STEAM INSTALLATION-->
